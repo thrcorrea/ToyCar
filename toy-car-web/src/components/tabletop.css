@@ -1,0 +1,20 @@
+.table-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 60vh;
+  width: 100vw;
+  overflow: auto;
+}
+
+.tabletop {
+  border-collapse: collapse;
+  width: 80vmin;
+  height: 80vmin;
+}
+
+.cell {
+  border: 1px solid white;
+  width: 20%;
+  height: 20%;
+}

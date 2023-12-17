@@ -3,6 +3,7 @@ package controller
 import (
 	"context"
 	"net/http"
+	"strings"
 
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog"
@@ -35,7 +36,7 @@ func PostCommandToyCar(ctx context.Context, toyCar toy.Toy) echo.HandlerFunc {
 			return e.NoContent(http.StatusBadRequest)
 		}
 
-		switch requestData.Command {
+		switch strings.ToUpper(requestData.Command) {
 		case "PLACE":
 			err := toyCar.Place(requestData.PositionX, requestData.PositionY, toy.Direction(requestData.Direction))
 			if err != nil {

@@ -39,6 +39,8 @@ func NewHttpServer(
 ) httpServer {
 	echoAPI := echo.New()
 
+	echoAPI.Use(middleware.CORS())
+
 	echoAPI.Validator = &CustomValidator{validator: validator.New()}
 
 	logger := zerolog.Ctx(ctx)

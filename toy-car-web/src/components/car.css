@@ -1,0 +1,19 @@
+.car-NORTH {
+  display: inline-block;
+  transform: rotate(90deg);
+}
+
+.car-EAST {
+  display: inline-block;
+  transform: rotate(180deg);
+}
+
+.car-SOUTH {
+  display: inline-block;
+  transform: rotate(270deg);
+}
+
+.car-WEST {
+  display: inline-block;
+  transform: rotate(360deg);
+}
