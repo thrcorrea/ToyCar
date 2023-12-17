@@ -1,0 +1,10 @@
+version: '3'
+services:
+  react-app:
+    build: ./toy-car-web
+    ports:
+      - "8080:80"
+  go-server:
+    build: ./toy-car-server
+    ports:
+      - "3000:3000"

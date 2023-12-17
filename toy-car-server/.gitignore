@@ -1,0 +1,8 @@
+.env
+.env.test
+.vscode
+**/__debug_bin
+godepgraph.png
+coverage.out
+report.json
+.idea

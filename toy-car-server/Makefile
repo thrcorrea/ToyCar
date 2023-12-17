@@ -1,6 +1,9 @@
 run:
 	go run ./cmd/main.go
 
+unit-test:
+	gotestsum -- ./internal/... -failfast -race -coverprofile ./coverage.out
+
 watch:
 	gotestsum --format=pkgname --watch -- -v -race -short ./internal/...
 

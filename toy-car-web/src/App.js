@@ -10,7 +10,7 @@ function App() {
   useEffect(() => {
     const interval = setInterval(async () => {
       try {
-        const response = await fetch('http://localhost:3001/toy')
+        const response = await fetch('http://localhost:3000/toy')
         if (response.status == 200) {
           const data = await response.json()
           setCarPosition({row: data.y, column: data.x, direction: data.direction})
@@ -25,7 +25,7 @@ function App() {
 
   const handleCommand = async (command) => {
     try{
-      const response = await fetch('http://localhost:3001/toy', {
+      const response = await fetch('http://localhost:3000/toy', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'

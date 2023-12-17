@@ -20,7 +20,7 @@ func main() {
 
 	cliInterace := cli.NewCli(toyCar)
 
-	httpServer := http.NewHttpServer(ctx, ":3001", toyCar)
+	httpServer := http.NewHttpServer(ctx, ":3000", toyCar)
 
 	go func() {
 		cliInterace.Start()
