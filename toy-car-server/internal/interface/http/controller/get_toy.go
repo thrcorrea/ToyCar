@@ -21,7 +21,11 @@ func MakeGetCarController(ctx context.Context, api *echo.Echo, toyCar toy.Toy) {
 func GetToyCarPosition(ctx context.Context, toyCar toy.Toy) echo.HandlerFunc {
 	return func(e echo.Context) error {
 
-		toyCarPosition, _ := toyCar.GetPosition()
+		toyCarPosition, err := toyCar.GetPosition()
+
+		if err != nil {
+			return err
+		}
 
 		response := GetToyCarResponse{
 			PositionX: toyCarPosition.PositionX,

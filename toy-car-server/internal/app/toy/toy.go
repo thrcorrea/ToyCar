@@ -19,7 +19,7 @@ type Toy interface {
 	Left() error
 	Right() error
 	Report() (string, error)
-	GetPosition() (ToyPosition, error)
+	GetPosition() (*ToyPosition, error)
 }
 
 type ToyPosition struct {
@@ -156,14 +156,14 @@ func (t *toy) Right() error {
 }
 
 // GetPosition implements Toy.
-func (t *toy) GetPosition() (ToyPosition, error) {
+func (t *toy) GetPosition() (*ToyPosition, error) {
 
 	err := CheckIfToyOnTable(t.Position)
 	if err != nil {
-		return ToyPosition{}, err
+		return nil, err
 	}
 
-	return ToyPosition{
+	return &ToyPosition{
 		PositionX: t.Position[0],
 		PositionY: t.Position[1],
 		Direction: t.Facing,

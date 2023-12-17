@@ -9,8 +9,8 @@
 
 .tabletop {
   border-collapse: collapse;
-  width: 80vmin;
-  height: 80vmin;
+  width: 60vmin;
+  height: 60vmin;
 }
 
 .cell {
