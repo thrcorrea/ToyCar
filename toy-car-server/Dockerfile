@@ -4,6 +4,8 @@ FROM golang:alpine
 # Set working directory
 WORKDIR /app
 
+ENV PORT=3000
+
 # Copy the source code
 COPY . .
 
