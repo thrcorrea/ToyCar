@@ -20,6 +20,49 @@ func (_m *Toy) EXPECT() *Toy_Expecter {
 	return &Toy_Expecter{mock: &_m.Mock}
 }
 
+// GetPosition provides a mock function with given fields:
+func (_m *Toy) GetPosition() (apptoy.ToyPosition, error) {
+	ret := _m.Called()
+
+	var r0 apptoy.ToyPosition
+	if rf, ok := ret.Get(0).(func() apptoy.ToyPosition); ok {
+		r0 = rf()
+	} else {
+		r0 = ret.Get(0).(apptoy.ToyPosition)
+	}
+
+	var r1 error
+	if rf, ok := ret.Get(1).(func() error); ok {
+		r1 = rf()
+	} else {
+		r1 = ret.Error(1)
+	}
+
+	return r0, r1
+}
+
+// Toy_GetPosition_Call is a *mock.Call that shadows Run/Return methods with type explicit version for method 'GetPosition'
+type Toy_GetPosition_Call struct {
+	*mock.Call
+}
+
+// GetPosition is a helper method to define mock.On call
+func (_e *Toy_Expecter) GetPosition() *Toy_GetPosition_Call {
+	return &Toy_GetPosition_Call{Call: _e.mock.On("GetPosition")}
+}
+
+func (_c *Toy_GetPosition_Call) Run(run func()) *Toy_GetPosition_Call {
+	_c.Call.Run(func(args mock.Arguments) {
+		run()
+	})
+	return _c
+}
+
+func (_c *Toy_GetPosition_Call) Return(_a0 apptoy.ToyPosition, _a1 error) *Toy_GetPosition_Call {
+	_c.Call.Return(_a0, _a1)
+	return _c
+}
+
 // Left provides a mock function with given fields:
 func (_m *Toy) Left() error {
 	ret := _m.Called()

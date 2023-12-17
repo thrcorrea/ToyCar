@@ -511,3 +511,61 @@ func Test_toy_Move(t *testing.T) {
 		})
 	}
 }
+
+func Test_toy_GetPosition(t *testing.T) {
+	type fields struct {
+		tableMaxLength int
+		tableMaxHeight int
+		Facing         Direction
+		Position       []int
+	}
+	tests := []struct {
+		name    string
+		fields  fields
+		want    ToyPosition
+		wantErr bool
+	}{
+		{
+			name: "Should return error when toy isnt placed for Right function",
+			fields: fields{
+				tableMaxLength: TABLE_MAX_LENGTH,
+				tableMaxHeight: TABLE_MAX_HEIGTH,
+				Facing:         DIRECTION,
+			},
+			wantErr: true,
+		},
+		{
+			name: "Should return position struct correctly",
+			fields: fields{
+				tableMaxLength: TABLE_MAX_LENGTH,
+				tableMaxHeight: TABLE_MAX_HEIGTH,
+				Facing:         DIRECTION,
+				Position:       []int{1, 2},
+			},
+			wantErr: false,
+			want: ToyPosition{
+				PositionX: 1,
+				PositionY: 2,
+				Direction: DIRECTION,
+			},
+		},
+	}
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			tr := &toy{
+				tableMaxLength: tt.fields.tableMaxLength,
+				tableMaxHeight: tt.fields.tableMaxHeight,
+				Facing:         tt.fields.Facing,
+				Position:       tt.fields.Position,
+			}
+			got, err := tr.GetPosition()
+			if (err != nil) != tt.wantErr {
+				t.Errorf("toy.GetPosition() error = %v, wantErr %v", err, tt.wantErr)
+				return
+			}
+			if !reflect.DeepEqual(got, tt.want) {
+				t.Errorf("toy.GetPosition() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}

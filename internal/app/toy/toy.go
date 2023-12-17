@@ -1,7 +1,6 @@
 package toy
 
 import (
-	"errors"
 	"fmt"
 )
 
@@ -20,6 +19,13 @@ type Toy interface {
 	Left() error
 	Right() error
 	Report() (string, error)
+	GetPosition() (ToyPosition, error)
+}
+
+type ToyPosition struct {
+	PositionX int
+	PositionY int
+	Direction Direction
 }
 
 type toy struct {
@@ -41,7 +47,7 @@ func NewToy(
 
 func CheckIfToyOnTable(position []int) error {
 	if len(position) <= 0 {
-		return errors.New("Toy car is not placed yet")
+		return ErrToyCarNotPlaced
 	}
 	return nil
 }
@@ -79,22 +85,22 @@ func (t *toy) Move() error {
 	switch t.Facing {
 	case NORTH:
 		if t.Position[1] <= 0 {
-			return errors.New("Cant move toy off the board")
+			return ErrCantMoveToyCarOffBoard
 		}
 		t.Position[1]--
 	case WEST:
 		if t.Position[0] <= 0 {
-			return errors.New("Cant move toy off the board")
+			return ErrCantMoveToyCarOffBoard
 		}
 		t.Position[0]--
 	case SOUTH:
 		if t.Position[1] == (t.tableMaxHeight - 1) {
-			return errors.New("Cant move toy off the board")
+			return ErrCantMoveToyCarOffBoard
 		}
 		t.Position[1]++
 	case EAST:
 		if t.Position[0] == (t.tableMaxLength - 1) {
-			return errors.New("Cant move toy off the board")
+			return ErrCantMoveToyCarOffBoard
 		}
 		t.Position[0]++
 	}
@@ -108,7 +114,7 @@ func (t *toy) Place(x int, y int, direction Direction) error {
 	t.Facing = direction
 
 	if x < 0 || x >= (t.tableMaxLength-1) || y < 0 || y >= (t.tableMaxHeight-1) {
-		return errors.New("Cant place toy off the board")
+		return ErrCantPlaceToyCarOffBoard
 	}
 
 	t.Position = []int{x, y}
@@ -147,4 +153,19 @@ func (t *toy) Right() error {
 	}
 
 	return nil
+}
+
+// GetPosition implements Toy.
+func (t *toy) GetPosition() (ToyPosition, error) {
+
+	err := CheckIfToyOnTable(t.Position)
+	if err != nil {
+		return ToyPosition{}, err
+	}
+
+	return ToyPosition{
+		PositionX: t.Position[0],
+		PositionY: t.Position[1],
+		Direction: t.Facing,
+	}, nil
 }
