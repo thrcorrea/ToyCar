@@ -522,7 +522,7 @@ func Test_toy_GetPosition(t *testing.T) {
 	tests := []struct {
 		name    string
 		fields  fields
-		want    ToyPosition
+		want    *ToyPosition
 		wantErr bool
 	}{
 		{
@@ -532,6 +532,7 @@ func Test_toy_GetPosition(t *testing.T) {
 				tableMaxHeight: TABLE_MAX_HEIGTH,
 				Facing:         DIRECTION,
 			},
+			want:    nil,
 			wantErr: true,
 		},
 		{
@@ -543,7 +544,7 @@ func Test_toy_GetPosition(t *testing.T) {
 				Position:       []int{1, 2},
 			},
 			wantErr: false,
-			want: ToyPosition{
+			want: &ToyPosition{
 				PositionX: 1,
 				PositionY: 2,
 				Direction: DIRECTION,

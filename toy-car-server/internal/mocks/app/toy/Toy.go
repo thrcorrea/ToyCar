@@ -21,14 +21,16 @@ func (_m *Toy) EXPECT() *Toy_Expecter {
 }
 
 // GetPosition provides a mock function with given fields:
-func (_m *Toy) GetPosition() (apptoy.ToyPosition, error) {
+func (_m *Toy) GetPosition() (*apptoy.ToyPosition, error) {
 	ret := _m.Called()
 
-	var r0 apptoy.ToyPosition
-	if rf, ok := ret.Get(0).(func() apptoy.ToyPosition); ok {
+	var r0 *apptoy.ToyPosition
+	if rf, ok := ret.Get(0).(func() *apptoy.ToyPosition); ok {
 		r0 = rf()
 	} else {
-		r0 = ret.Get(0).(apptoy.ToyPosition)
+		if ret.Get(0) != nil {
+			r0 = ret.Get(0).(*apptoy.ToyPosition)
+		}
 	}
 
 	var r1 error
@@ -58,7 +60,7 @@ func (_c *Toy_GetPosition_Call) Run(run func()) *Toy_GetPosition_Call {
 	return _c
 }
 
-func (_c *Toy_GetPosition_Call) Return(_a0 apptoy.ToyPosition, _a1 error) *Toy_GetPosition_Call {
+func (_c *Toy_GetPosition_Call) Return(_a0 *apptoy.ToyPosition, _a1 error) *Toy_GetPosition_Call {
 	_c.Call.Return(_a0, _a1)
 	return _c
 }
