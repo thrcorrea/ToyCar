@@ -5,7 +5,8 @@ import TableTop from './components/tabletop';
 import React, { useEffect, useState } from 'react';
 
 function App() {
-  const API_URL = "http://localhost:3000"
+  // @ts-ignore
+  const API_URL = process.env.REACT_APP_API_URL
   const [carPosition, setCarPosition] = useState({ row: null, column: null, direction: ""});
 
   useEffect(() => {

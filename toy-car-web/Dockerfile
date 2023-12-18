@@ -22,6 +22,8 @@ FROM nginx:alpine
 # Copiando os arquivos construídos para o diretório de servir do Nginx
 COPY --from=build /app/build /usr/share/nginx/html
 
+ENV REACT_APP_API_URL=http://localhost:3000
+
 # Expondo a porta 80
 EXPOSE 80
 
