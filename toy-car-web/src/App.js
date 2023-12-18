@@ -25,15 +25,20 @@ function App() {
     return () => clearInterval(interval)
   }, []);
 
-  const handleCommand = async (command) => {
+  const handleCommand = async (command, data) => {
     try{
-      const response = await fetch(API_URL + '/toy', {
+      const url = API_URL + '/toy/' + command
+      const requestData = {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
         },
-        body: JSON.stringify({ ...command })
-      })
+      }
+      if (data) {
+        requestData.body = JSON.stringify(data)
+      }
+
+      const response = await fetch(url, requestData)
       if (response.status == 202) {
         const data = await response.json()
         setCarPosition({row: data.y, column: data.x, direction: data.direction})
@@ -44,7 +49,7 @@ function App() {
   };
 
   const placeCar = (position) => {
-    handleCommand({ command: "PLACE", row: position.y, column: position.x, direction: position.direction})
+    handleCommand("place", position)
   }
 
 
@@ -63,9 +68,9 @@ function App() {
       </TableTop>
       <div>
         <PlacementForm placeCar={placeCar} carPosition={carPosition}></PlacementForm>
-      <button onClick={() => handleCommand({ command: 'left' })}>Left</button>
-      <button onClick={() => handleCommand({ command: 'right' })}>Right</button>
-      <button onClick={() => handleCommand({ command: 'move' } )}>Move</button>
+      <button onClick={() => handleCommand('left')}>Left</button>
+      <button onClick={() => handleCommand('right')}>Right</button>
+      <button onClick={() => handleCommand('move')}>Move</button>
     </div>
       </header>
     </div>

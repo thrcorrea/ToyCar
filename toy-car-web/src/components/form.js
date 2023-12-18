@@ -1,4 +1,3 @@
-// src/components/RecipeForm.js
 import React, { useState } from 'react';
 
 function PlacementForm({ placeCar, carPosition }) {

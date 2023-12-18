@@ -61,7 +61,10 @@ func NewHttpServer(
 	echoAPI.HTTPErrorHandler = NewHttpErrorHandler(ctx, NewErrorStatusCodeMaps()).Handler
 
 	controller.MakeGetCarController(ctx, echoAPI, toyCar)
-	controller.MakePostCommandToyController(ctx, echoAPI, toyCar)
+	controller.MakePlaceToyController(ctx, echoAPI, toyCar)
+	controller.MakeMoveToyController(ctx, echoAPI, toyCar)
+	controller.MakeLeftToyController(ctx, echoAPI, toyCar)
+	controller.MakeRightToyController(ctx, echoAPI, toyCar)
 
 	return httpServer{
 		api:  echoAPI,
