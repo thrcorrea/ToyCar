@@ -1,4 +1,4 @@
-package http
+package middlewares
 
 import (
 	"context"
@@ -7,11 +7,21 @@ import (
 
 	"github.com/labstack/echo/v4"
 	"github.com/rs/zerolog"
+	"github.com/toy-simulator/internal/app/toy"
 )
 
 type httpErrorHandler struct {
 	statusCodes map[error]int
 	logger      *zerolog.Logger
+}
+
+func NewErrorStatusCodeMaps() map[error]int {
+
+	var errorStatusCodeMaps = make(map[error]int)
+	errorStatusCodeMaps[toy.ErrCantMoveToyCarOffBoard] = http.StatusBadRequest
+	errorStatusCodeMaps[toy.ErrCantPlaceToyCarOffBoard] = http.StatusBadRequest
+	errorStatusCodeMaps[toy.ErrToyCarNotPlaced] = http.StatusBadRequest
+	return errorStatusCodeMaps
 }
 
 func NewHttpErrorHandler(ctx context.Context, errorStatusCodeMaps map[error]int) *httpErrorHandler {

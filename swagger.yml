@@ -16,7 +16,7 @@ paths:
         - Toy
       summary: Fetch toy car position
       description: Fetch toy car position in the tabletop and its direction
-      operationId: getPet
+      operationId: getToy
       responses:
         "200":
           description: Successful operation
@@ -30,18 +30,79 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/BadRequest"
+  /toy/place:
     post:
       tags:
         - Toy
-      summary: Send commands to control the toy car
-      description: Send commands like PLACE, MOVE, LEFT and RIGHT to control the toy car
-      operationId: commandToy
+      summary: Send place command
+      description: Send Command to place the car in the tabletop
+      operationId: placeToy
       requestBody:
         content:
           application/json:
             schema:
               $ref: "#/components/schemas/ToyCommand"
         required: true
+      responses:
+        "202":
+          description: Command Registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToyPosition"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+  /toy/move:
+    post:
+      tags:
+        - Toy
+      summary: Send move command
+      description: Send Command to move the car in the tabletop
+      operationId: moveToy
+      responses:
+        "202":
+          description: Command Registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToyPosition"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+  /toy/left:
+    post:
+      tags:
+        - Toy
+      summary: Send left command
+      description: Send Command to turn left the car on the tabletop
+      operationId: leftToy
+      responses:
+        "202":
+          description: Command Registered
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ToyPosition"
+        "400":
+          description: Bad Request
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/BadRequest"
+  /toy/right:
+    post:
+      tags:
+        - Toy
+      summary: Send right command
+      description: Send Command to turn right the car on the tabletop
+      operationId: rigthToy
       responses:
         "202":
           description: Command Registered
@@ -85,6 +146,9 @@ components:
       type: object
       required:
         - command
+        - x
+        - y
+        - direction
       properties:
         command:
           type: string
@@ -97,15 +161,12 @@ components:
           type: integer
           format: int64
           example: 10
-          description: Required for PLACE command
         y:
           type: integer
           format: int64
           example: 10
-          description: Required for PLACE command
         direction:
           type: string
-          description: Required for PLACE command
           enum:
             - SOUTH
             - NORTH

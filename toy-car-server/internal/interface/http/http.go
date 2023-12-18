@@ -2,7 +2,6 @@ package http
 
 import (
 	"context"
-	"net/http"
 
 	"github.com/go-playground/validator"
 	"github.com/labstack/echo/v4"
@@ -10,6 +9,7 @@ import (
 	"github.com/rs/zerolog"
 	"github.com/toy-simulator/internal/app/toy"
 	"github.com/toy-simulator/internal/interface/http/controller"
+	middlewares "github.com/toy-simulator/internal/interface/http/middleware"
 )
 
 type httpServer struct {
@@ -21,17 +21,6 @@ type HttpServer interface {
 	StartServer() error
 }
 
-type CustomValidator struct {
-	validator *validator.Validate
-}
-
-func (cv *CustomValidator) Validate(i interface{}) error {
-	if err := cv.validator.Struct(i); err != nil {
-		return echo.NewHTTPError(http.StatusBadRequest, err.Error())
-	}
-	return nil
-}
-
 func NewHttpServer(
 	ctx context.Context,
 	port string,
@@ -41,7 +30,7 @@ func NewHttpServer(
 
 	echoAPI.Use(middleware.CORS())
 
-	echoAPI.Validator = &CustomValidator{validator: validator.New()}
+	echoAPI.Validator = middlewares.NewCustomValidator(validator.New())
 
 	logger := zerolog.Ctx(ctx)
 	echoAPI.Use(middleware.RequestLoggerWithConfig(middleware.RequestLoggerConfig{
@@ -58,7 +47,7 @@ func NewHttpServer(
 		},
 	}))
 
-	echoAPI.HTTPErrorHandler = NewHttpErrorHandler(ctx, NewErrorStatusCodeMaps()).Handler
+	echoAPI.HTTPErrorHandler = middlewares.NewHttpErrorHandler(ctx, middlewares.NewErrorStatusCodeMaps()).Handler
 
 	controller.MakeGetCarController(ctx, echoAPI, toyCar)
 	controller.MakePlaceToyController(ctx, echoAPI, toyCar)
